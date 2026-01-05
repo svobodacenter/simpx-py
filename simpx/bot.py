@@ -127,7 +127,7 @@ class SimpleXBot:
                 # Show general help
                 commands = list(self._help_command_text.keys())
                 if commands:
-                    help_text = "Available commands:\n" + "\n".join(f"*{self._command_prefix}{cmd}* - {self._help_command_text[cmd].split('.')[0]}." for cmd in sorted(commands))
+                    help_text = "Available commands:\n" + "\n".join(f"{self._command_prefix}{cmd} - {self._help_command_text[cmd].split('.')[0]}." for cmd in sorted(commands))
                     await self.send_message(chat_info, help_text)
                 else:
                     await self.send_message(chat_info, "No commands available.")
