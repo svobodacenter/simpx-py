@@ -414,6 +414,11 @@ class SimpleXBot:
             raise ValueError("Bot has not been started yet.")
         return self.ext.schedule_task(func, delay, repeat, interval, name, args, kwargs)
 
+    def cancel_task(self, name: str):
+        """Cancel a task."""
+        if not self.ext:
+            raise ValueError("Bot has not been started yet.")
+        return self.ext.cancel_task(name)
     
     def schedule_message(self, recipient, text: str, delay: float):
         """Schedule a message to be sent in the future."""

@@ -723,6 +723,17 @@ class SimpleXBotExtensions:
         task.start()
         self.scheduled_tasks.append(task)
         return task
+
+    def cancel_task(self, name: str) -> None:
+        """
+        Cancel a task by name
+        """
+        # Find a task by name and cancel it
+        for task in self.scheduled_tasks:
+            if task.name == name:
+                task.cancel()
+        # Remove a task from scheduled_tasks
+        self.scheduled_tasks = [t for t in self.scheduled_tasks if t.name != name]
     
     def schedule_message(self, 
                          recipient: Union[ContactWrapper, GroupWrapper, ChatWrapper], 
