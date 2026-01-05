@@ -24,7 +24,7 @@ class BotProfile:
     auto_accept_contacts: bool = True
     welcome_message: Optional[str] = None
     auto_accept_message: Optional[str] = None
-    command_prefix: str = "!"
+    command_prefix: str = "/"
     
     # Server configuration
     server_url: str = "ws://localhost:5225"

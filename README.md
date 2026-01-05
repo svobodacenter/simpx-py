@@ -19,7 +19,7 @@ Come chat about bot development, the project, or even SimpleX in general.
 
 *   Decorator-based handlers for commands (`@bot.command`) and events (`@bot.event`).
 *   Profile management (`BotProfile`, `ProfileManager`) to handle bot identity.
-*   Built-in, customizable help command (`!help`).
+*   Built-in, customizable help command (`/help`).
 *   Optional automatic welcome message for new contacts.
 *   Extension classes (`SimpleXBotExtensions`) providing wrapper objects (ContactWrapper, GroupWrapper, ChatWrapper etc.) for more Pythonic interaction with the SimpleX API.
 *   Basic task scheduling.
@@ -149,7 +149,7 @@ if __name__ == "__main__":
     ```bash
     python example-bot.py
     ```
-6.  **Connect to your bot:** Use the bot's address (printed to the console as plaintext and QR code on run) in your SimpleX Chat client to connect and try the commands (`!help`, `!info`, `!echo`, `!square`, `!add`, `!msg`).
+6.  **Connect to your bot:** Use the bot's address (printed to the console as plaintext and QR code on run) in your SimpleX Chat client to connect and try the commands (`/help`, `!info`, `!echo`, `!square`, `!add`, `!msg`).
 
 ## Contributing
 

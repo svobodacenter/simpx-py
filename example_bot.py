@@ -23,7 +23,7 @@ if __name__ == "__main__":
         display_name="ExampleBot",
         full_name="Example Bot",
         description="An example bot using SimpX-py framework",
-        welcome_message="Hello {name}! I'm an example bot. Try !help to see what I can do.",
+        welcome_message="Hello {name}! I'm an example bot. Try /help to see what I can do.",
         auto_accept_message="This is the example bot!",
         command_prefix="!"
     )
