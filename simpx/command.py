@@ -64,6 +64,7 @@ class MCLink(TypedDict):
 class MCImage(TypedDict):
     """Image message content."""
     type: Literal["image"]
+    text: str
     image: str  # image preview as base64 encoded data string
 
 class MCFile(TypedDict):
