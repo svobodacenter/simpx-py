@@ -555,6 +555,29 @@ class ScheduledTask:
         if self.task and not self.task.done():
             self.task.cancel()
 
+class UserData:
+    def __init__(self, initial: dict | None = None):
+        self._data = initial if initial is not None else {}
+
+    def get(self, key, default=None):
+        return self._data.get(key, default)
+
+    def set(self, key, value):
+        self._data[key] = value
+        return value
+
+    def delete(self, key):
+        self._data.pop(key, None)
+
+    def clear(self):
+        self._data.clear()
+
+    def has(self, key) -> bool:
+        return key in self._data
+
+    def as_dict(self) -> dict:
+        return self._data
+
 
 class SimpleXBotExtensions:
     """Extension class for SimpleXBot with additional helper methods."""
@@ -563,6 +586,7 @@ class SimpleXBotExtensions:
         """Initialize the extensions with a reference to the bot."""
         self.bot = bot
         self.scheduled_tasks = []
+        self.user_data = UserData()
     
     async def get_user(self) -> UserWrapper:
         """Get the current active user."""
