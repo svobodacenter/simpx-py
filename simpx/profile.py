@@ -22,6 +22,7 @@ class BotProfile:
     # Bot configuration
     description: str = "A SimpleX bot built with SimpleXBot framework"
     auto_accept_contacts: bool = True
+    help_message: bool = True
     welcome_message: Optional[str] = None
     auto_accept_message: Optional[str] = None
     command_prefix: str = "/"

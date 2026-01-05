@@ -53,6 +53,8 @@ class SimpleXBot:
                 self._welcome_message = profile.welcome_message
             if profile.command_prefix:
                 self._command_prefix = profile.command_prefix
+            if not profile.help_message:
+                self._help_command_enabled = False
         
         self.ext = None
 
