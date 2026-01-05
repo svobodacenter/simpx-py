@@ -575,7 +575,7 @@ class ChatClient:
     async def ok_chat_command(self, command: ChatCommand) -> None:
         """Send a command and expect an 'ok' response."""
         r = await self.send_chat_command(command)
-        if r["type"] != "cmdOk":
+        if r["type"] != "itemsReadForChat":
             raise ChatCommandError(f"{command['type']} command error", r)
     
     @property
