@@ -408,11 +408,12 @@ class SimpleXBot:
             raise ValueError("Bot has not been started yet.")
         return await self.ext.get_contact_requests()
     
-    def schedule_task(self, func, delay=0, repeat=False, interval=0, args=None, kwargs=None):
+    def schedule_task(self, func, delay=0, repeat=False, interval=0, name: str = None, args=None, kwargs=None):
         """Schedule a task to be executed in the future."""
         if not self.ext:
             raise ValueError("Bot has not been started yet.")
-        return self.ext.schedule_task(func, delay, repeat, interval, args, kwargs)
+        return self.ext.schedule_task(func, delay, repeat, interval, name, args, kwargs)
+
     
     def schedule_message(self, recipient, text: str, delay: float):
         """Schedule a message to be sent in the future."""

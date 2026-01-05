@@ -516,13 +516,15 @@ class ScheduledTask:
                  kwargs: dict = None,
                  delay: float = 0, 
                  repeat: bool = False, 
-                 interval: float = 0):
+                 interval: float = 0,
+                 name: str = None):
         self.func = func
         self.args = args or ()
         self.kwargs = kwargs or {}
         self.delay = delay
         self.repeat = repeat
         self.interval = interval
+        self.name = name
         self.task = None
         self.cancelled = False
     
@@ -699,6 +701,7 @@ class SimpleXBotExtensions:
                       delay: float = 0, 
                       repeat: bool = False, 
                       interval: float = 0, 
+                      name: str = None,
                       args: tuple = None, 
                       kwargs: dict = None) -> ScheduledTask:
         """
@@ -709,13 +712,14 @@ class SimpleXBotExtensions:
             delay: Delay in seconds before first execution
             repeat: Whether to repeat the task
             interval: Interval in seconds between repeated executions
+            name: Name of the task
             args: Positional arguments to pass to the function
             kwargs: Keyword arguments to pass to the function
             
         Returns:
             ScheduledTask object that can be used to cancel the task
         """
-        task = ScheduledTask(func, args, kwargs, delay, repeat, interval)
+        task = ScheduledTask(func, args, kwargs, delay, repeat, interval, name)
         task.start()
         self.scheduled_tasks.append(task)
         return task
