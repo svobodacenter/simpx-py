@@ -167,7 +167,11 @@ class SimpleXBot:
                     continue
                     
                 # Debug logging to understand the response structure
-                print(f"Received message of type: {response.get('type')}")
+                type_ = response.get('type')
+                print(f"Received message of type: {type_}")
+                # Log error message
+                if type_ == "chatError":
+                    print(f"Error message: {response.get('chatError', {}).get('errorType', {}).get('message', '')}")
                 
                 await self._dispatch_event(response)
             except Exception as e:
