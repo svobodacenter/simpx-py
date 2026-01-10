@@ -8,9 +8,9 @@ This library was initially created as a somewhat direct port of TypeScript struc
 
 **Note:** While functional, being a relatively direct conversion from the TypeScript structures means this does not always follow Python best practices and would benefit from further refinement
 
-## Join the SimpleX group!
+## Join our SimpleX group!
 
-[SimpX group](https://simplex.chat/contact#/?v=2-7&smp=smp%3A%2F%2FjA736UwbVG_LKSQyi9tr8LZOxgqBIQTJgbi7jgAGJhM%3D%40thebunny.zone%2Fr0S1zLSurZViaMtrK_BXeo_Vf7UIP1ce%23%2F%3Fv%3D1-3%26dh%3DMCowBQYDK2VuAyEA53LohGQGd_7rmltrzZtFagwM2s6CQk0XDeqQLMKtmhk%253D%26srv%3Dbunnysmppnjrd7f4saxjcewlnf3jxyvyjjmtsvdz7cnpxpt5y4mqnoyd.onion&data=%7B%22groupLinkId%22%3A%22rCjlKF_XB4fZFujtiOChlg%3D%3D%22%7D)
+[Our group](https://smp18.simplex.im/g#xwNO0BQohG5VUKdEPbu5ten8OY8Ty29NsMzK_ENGeUI)
 
 Come chat about bot development, the project, or even SimpleX in general. 
 
@@ -29,7 +29,7 @@ Come chat about bot development, the project, or even SimpleX in general.
 ## Installation
 
 ```bash
-git clone https://github.com/FailSpy/simpx-py
+git clone https://github.com/svobodacenter/simpx-py
 cd simpx-py
 # Optional: Create and activate a virtual environment
 # python -m venv venv
@@ -134,7 +134,7 @@ if __name__ == "__main__":
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/FailSpy/simpx-py
+    git clone https://github.com/svobodacenter/simpx-py
     cd simpx-py
     ```
 2.  **Install Dependencies:**
@@ -149,7 +149,7 @@ if __name__ == "__main__":
     ```bash
     python example-bot.py
     ```
-6.  **Connect to your bot:** Use the bot's address (printed to the console as plaintext and QR code on run) in your SimpleX Chat client to connect and try the commands (`/help`, `!info`, `!echo`, `!square`, `!add`, `!msg`).
+6.  **Connect to your bot:** Use the bot's address (printed to the console as plaintext and QR code on run) in your SimpleX Chat client to connect and try the commands (`/help`, `/info`, `/echo`, `/square`, `/add`, `/msg`).
 
 ## Contributing
 
