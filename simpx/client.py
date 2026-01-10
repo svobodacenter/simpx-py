@@ -400,7 +400,7 @@ class ChatClient:
         """Create a user contact address."""
         r = await self.send_chat_command({"type": "createMyAddress"})
         if r["type"] == "userContactLinkCreated":
-            return r["connLinkContact"]["connFullLink"]
+            return r["connLinkContact"]["connShortLink"]
         raise ChatCommandError("Error creating user address", r)
     
     async def api_delete_user_address(self) -> None:
