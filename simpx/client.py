@@ -416,7 +416,7 @@ class ChatClient:
         if r["type"] == "userContactLink":
             link = r["contactLink"]
             if "connLinkContact" in link:
-                return link["connLinkContact"]["connFullLink"]
+                return link["connLinkContact"]["connShortLink"]
             return r["contactLink"]["connReqContact"]
         elif (r["type"] == "chatCmdError" and 
               r["chatError"]["type"] == "errorStore" and 
