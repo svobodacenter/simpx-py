@@ -25,6 +25,17 @@ Come chat about bot development, the project, or even SimpleX in general.
 *   Basic task scheduling.
 *   Support for sending and updating live messages.
 *   Automatic message reading.
+*   Automatic bot registration: marks the profile as a bot and publishes the commands menu shown by SimpleX Chat apps (v6.4.3+) next to the message bar.
+
+## Bot commands menu
+
+SimpleX Chat apps (v6.4.3+) highlight `/commands` in messages and show a commands menu next to the message bar only for chats with a profile marked as a bot. `SimpleXBot` does this automatically on start: it marks the profile with `peerType: "bot"` and publishes every `@bot.command(...)` handler that has a plain name (regex-pattern commands are excluded) as a menu entry, using the `help` text as the label.
+
+Pass `register_commands_menu=False` to `SimpleXBot(...)` to disable this, or call `bot.set_commands_menu([...])` before `start()` to control the entries yourself, e.g. `{"type": "command", "keyword": "echo", "label": "Echo", "params": "<text>"}` (`params` is optional - without it the apps send the command immediately on tap, with it they paste `/echo <text>` into the input). Related `BotProfile` options: `mark_as_bot=False` to never mark the profile, `allow_files=True` to let contacts send files.
+
+Files are off by default (matching the official SDK and `/create bot`): a file is only written to disk when the bot explicitly calls `api_receive_file(file_id, path)` - incoming files are never downloaded automatically. Be careful when you do: don't build receive paths from user-controlled names, and validate anything you feed into parsers.
+
+The apps always send menu commands as `/keyword`, so use `command_prefix="/"` in `BotProfile` for the menu to work end to end.
 
 ## Installation
 

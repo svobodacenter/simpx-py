@@ -27,6 +27,10 @@ class BotProfile:
     auto_accept_message: Optional[str] = None
     command_prefix: str = "/"
     
+    # Bot registration (v6.4.3+ apps): mark profile as a bot and allow files
+    mark_as_bot: bool = True
+    allow_files: bool = False
+    
     # Server configuration
     server_url: str = "ws://localhost:5225"
     
@@ -47,6 +51,25 @@ class BotProfile:
             "fullName": self.full_name,
             "image": self.image
         }
+    
+    def bot_profile_payload(self, commands: Optional[List[Dict[str, Any]]] = None) -> SimpleXProfile:
+        """
+        Build the full profile payload for a bot, including the fields
+        that make SimpleX Chat apps (v6.4.3+) highlight /commands and
+        show the commands menu next to the message bar.
+        """
+        profile = dict(self.simplex_profile)
+        if self.mark_as_bot:
+            profile["peerType"] = "bot"
+            preferences: Dict[str, Any] = {
+                "calls": {"allow": "no"},
+                "voice": {"allow": "no"},
+                "files": {"allow": "yes" if self.allow_files else "no"},
+            }
+            if commands:
+                preferences["commands"] = commands
+            profile["preferences"] = preferences
+        return profile
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert the profile to a dictionary for serialization."""
@@ -294,7 +317,7 @@ class ProfileManager:
                 # Update existing profile
                 await self.client.api_update_profile(
                     active_user["userId"],
-                    self.current_profile.simplex_profile
+                    self.current_profile.bot_profile_payload()
                 )
                 print(f"Updated profile: {self.current_profile.display_name} (ID: {profile_id})")
         else:
@@ -329,7 +352,7 @@ class ProfileManager:
                 if update_needed:
                     await self.client.api_update_profile(
                         self.current_profile.user_id,
-                        self.current_profile.simplex_profile
+                        self.current_profile.bot_profile_payload()
                     )
                     print(f"Updated profile: {self.current_profile.display_name} (ID: {profile_id})")
             else:
@@ -342,7 +365,7 @@ class ProfileManager:
         """Create a new profile on the SimpleX server."""
         # Create a new user profile
         user = await self.client.api_create_active_user(
-            self.current_profile.simplex_profile,
+            self.current_profile.bot_profile_payload(),
             same_servers=True,
             past_timestamp=False
         )

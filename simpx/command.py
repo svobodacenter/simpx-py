@@ -27,12 +27,40 @@ class ServerProtocol(str, Enum):
 # Type alias for chat item IDs
 ChatItemId = int
 
+class SimplePreference(TypedDict):
+    """Simple allowed/disabled preference."""
+    allow: str
+
+class ChatBotCommand(TypedDict, total=False):
+    """A bot command shown in the apps' commands menu."""
+    type: Literal["command"]
+    keyword: str
+    label: str
+    params: Optional[str]
+
+class ChatBotCommandMenu(TypedDict):
+    """A nested menu of bot commands shown in the apps' commands menu."""
+    type: Literal["menu"]
+    label: str
+    commands: List[ChatBotCommand]
+
+class Preferences(TypedDict, total=False):
+    """Partial chat preferences."""
+    commands: Optional[List[ChatBotCommand]]
+    calls: SimplePreference
+    voice: SimplePreference
+    files: SimplePreference
+
 class Profile(TypedDict, total=False):
     """User profile information."""
     displayName: str
     fullName: str
+    shortDescr: Optional[str]
+    description: Optional[str]
     image: Optional[str]
     contactLink: Optional[str]
+    preferences: Optional[Preferences]
+    peerType: Optional[str]
 
 class LocalProfile(TypedDict, total=False):
     """User's local profile information."""

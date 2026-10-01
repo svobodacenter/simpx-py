@@ -27,13 +27,16 @@ class SimpleXBot:
     similar to Discord.py, while respecting the SimpleX architecture.
     """
     
-    def __init__(self, profile: Optional[BotProfile] = None, server_url: Optional[str] = None):
+    def __init__(self, profile: Optional[BotProfile] = None, server_url: Optional[str] = None,
+                 register_commands_menu: bool = True):
         """
         Initialize the SimpleX bot.
         
         Args:
             profile: The bot profile to use
             server_url: The WebSocket URL of the SimpleX server (overrides profile's server URL)
+            register_commands_menu: Mark the profile as a bot and publish the
+                commands menu shown by SimpleX Chat apps (v6.4.3+)
         """
         self.profile_manager = ProfileManager()
         self.server_url = server_url
@@ -46,6 +49,8 @@ class SimpleXBot:
         self._help_command_text = {}
         self._welcome_message = None
         self._auto_read_messages = True  # Default to auto-read messages
+        self._register_commands_menu = register_commands_menu
+        self._custom_commands_menu: Optional[List[Dict[str, Any]]] = None
 
         if profile:
             self.profile_manager.add_profile(profile, "default")
@@ -96,6 +101,10 @@ class SimpleXBot:
         # Register default welcome message handler if one is set
         if self._welcome_message:
             self._register_welcome_handler()
+        
+        # Mark the profile as a bot and publish the commands menu for the apps
+        if self._register_commands_menu:
+            await self._register_bot_commands()
         
         # Start processing messages
         self.running = True
@@ -155,6 +164,46 @@ class SimpleXBot:
                 contact_id,
                 message
             )
+
+    def set_commands_menu(self, commands: List[Dict[str, Any]]):
+        """
+        Set a custom commands menu to publish instead of the auto-derived one.
+
+        Must be called before start(). Each entry is a dict like
+        {"type": "command", "keyword": "echo", "label": "Echo", "params": "<text>"}.
+        "params" is optional: without it the apps send the command immediately
+        when tapped, with it the apps paste "/keyword <params>" into the input.
+        """
+        self._custom_commands_menu = commands
+
+    def _build_commands_menu(self) -> List[Dict[str, Any]]:
+        """Build the commands menu from the registered command handlers."""
+        if self._custom_commands_menu is not None:
+            return self._custom_commands_menu
+        menu: List[Dict[str, Any]] = []
+        for name in self._command_handlers:
+            if not isinstance(name, str):
+                continue
+            help_text = self._help_command_text.get(name)
+            label = help_text.split(".")[0].strip() if help_text else name.capitalize()
+            if len(label) > 64:
+                label = label[:61].rstrip() + "..."
+            menu.append({"type": "command", "keyword": name, "label": label})
+        return menu
+
+    async def _register_bot_commands(self):
+        """Mark the profile as a bot and publish the commands menu."""
+        profile = self.profile_manager.current_profile
+        if not profile or not profile.user_id:
+            print("Cannot register bot commands: no active user")
+            return
+        menu = self._build_commands_menu()
+        try:
+            await self.client.api_update_profile(profile.user_id, profile.bot_profile_payload(menu))
+            keywords = ", ".join("/" + entry["keyword"] for entry in menu if entry.get("type") == "command")
+            print(f"Bot commands menu registered ({keywords or 'no commands'})")
+        except Exception as e:
+            print(f"Error registering bot commands menu: {e}")
 
     async def _process_messages(self):
         """Process incoming messages and dispatch events."""
