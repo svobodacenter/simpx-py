@@ -35,8 +35,6 @@ Pass `register_commands_menu=False` to `SimpleXBot(...)` to disable this, or cal
 
 Files are off by default (matching the official SDK and `/create bot`): a file is only written to disk when the bot explicitly calls `api_receive_file(file_id, path)` - incoming files are never downloaded automatically. Be careful when you do: don't build receive paths from user-controlled names, and validate anything you feed into parsers.
 
-The apps always send menu commands as `/keyword`, so use `command_prefix="/"` in `BotProfile` for the menu to work end to end.
-
 ## Installation
 
 ```bash
